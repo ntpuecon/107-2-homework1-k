@@ -57,6 +57,7 @@ library(dplyr)
 
 
 ans:$個經PR_i=成績_i+(經原成績_i-成績_i)T_i$
+??我要再想想
 
 △思考：
 (1)T=1才會有PR值嗎? 對，因為能夠修課才會列入排名。所以當T=0(不可修課)應為NA。
@@ -70,6 +71,9 @@ PR值受到第一次第一學期修完"個經"在同班排名的影響,而排名
 接續上題，課堂上的treatment dummy即為這裡的**可修個體**dummy，請寫下對應課堂效應結構$Y_i=Y_{0i}+(Y_{1i}-Y_{0i})T_i$之對應寫法（以這裡的文字符號表示）。
 
 ans:$個經PR_i=經原不及格成績_i+(經原及格成績_i-經原不及格成績_i)T_i$
+
+  $個經PR_i=不可修個經_i+(可修個經_i-不可修個經_i)T_i$
+
 
 ??我想：經原成績不及格的話，就不能修個經，就不會有個經PR，所以此條式子還是怪怪
  
@@ -92,15 +96,52 @@ hw1Data <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/mas
 
 請進行OLS估計前述的簡單迴歸模型。（注意估計式標準誤必需使用穩健標準誤robust standard error，即使用三明治及HC調整後的標準誤。）
 
+```{r}
+summary(hw1Data)
+```
+
+```{r}
+na.omit(hw1Data)->
+  hw1NewData
+```
+
+```{r}
+#雖然老師上課有說要看變數與變數之間的關係，但我覺得此處應該不用看，因為是dummy一定1不然就是0，所以圖才會長這樣
+
+Y="個經PR"
+X="可修個體"
+
+library(psych)
+hw1Data %>%
+  select(X,Y) %>%
+  pairs.panels()
+
+```
+
 ```{r ans13}
+
+hw1NewData %>%
+  lm(個經PR~可修個體,data=.)->  model1
+
+library(sandwich)
+library(lmtest)
+
+coeftest(model1, vcov.= vcovHC, type="HC1")->
+  model1_coeftest
+```
+```{r}
+summary(model1_coeftest)
 ```
 
 ## 1.4 選擇性偏誤
 上題的估計結果很可能不正確，請說明原因故事（非數學證明）。
 
+說明：
+
 ## 1.5 選擇性偏誤
 這個資料還包含**經原PR**變數，它是學生最後修過的經原成績在該經原班的排名。說明有必要控制**經原PR**的理由（非數學證明）。
 
+說明：
 
 ## 1.6 複迴歸模型
 估算以下的複迴歸模型：
