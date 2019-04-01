@@ -56,11 +56,6 @@ library(dplyr)
 
 Ans:
 $Y_i=Y_{0i}+(Y_{1i}-Y_{0i})T_i$
-# Yi ：個經PR(rank)
-# Y0i：經原不及格
-# Y1i：修過經原
-# Ti ：虛擬變數，當Ti=1時，表可以修習個經；當Ti=0時，表不可以修習個經。
-
 
 ## 1.2 效應結構
 接續上題，課堂上的treatment dummy即為這裡的**可修個體**dummy，請寫下對應課堂效應結構$Y_i=Y_{0i}+(Y_{1i}-Y_{0i})T_i$之對應寫法（以這裡的文字符號表示）。
@@ -89,36 +84,10 @@ hw1Data <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/mas
 請進行OLS估計前述的簡單迴歸模型。（注意估計式標準誤必需使用穩健標準誤robust standard error，即使用三明治及HC調整後的標準誤。）
 
 ```{r}
-str(hw1Data)
-# 看一下資料型態
-```
-
-```{r}
-summary(hw1Data)
-# 看一下NA多寡
-```
-
-```{r}
 na.omit(hw1Data) -> hw1Data_revised
-# 除NA
-```
-
-```{r}
-sum(is.na(hw1Data_revised))
-# 確認資料中都沒有NA了（NA個數為0）
-```
-
-```{r}
-library(psych)
-hw1Data %>%
-  select(可修個體,個經PR) %>%
-  pairs.panels()
-# 觀察一下資料，圖神怪（因為虛擬變數）
-# 這樣是否不需取對數？（應該說無法取對數）
 ```
 
 ```{r ans13}
-# 直接來跑個迴歸吧！（男子漢～行動快速像那江河湍急）
 hw1Data_revised %>% 
   lm(個經PR~可修個體, data=.) -> model1
 
@@ -129,8 +98,6 @@ library(broom)
 
 summary(model1)
 
-# 結果看起來可能或許應該合理，x 係數為正，表示可修個體（經原過了）對個經PR有正向影響
-
 coeftest(model1, vcov. = vcovHC, type="HC1") -> model1_coeftest 
 
 summary(model1_coeftest)
@@ -140,13 +107,13 @@ summary(model1_coeftest)
 上題的估計結果很可能不正確，請說明原因故事（非數學證明）。
 
 Ans:
-立足點的不同....
+立足點的不同...
 
 ## 1.5 選擇性偏誤
 這個資料還包含**經原PR**變數，它是學生最後修過的經原成績在該經原班的排名。說明有必要控制**經原PR**的理由（非數學證明）。
 
 Ans:
-控制立足點（這題不就跟上一樣嗎= =）
+控制立足點...
 
 ## 1.6 複迴歸模型
 估算以下的複迴歸模型：
@@ -154,25 +121,6 @@ $$個經PR_i=\beta_0+\beta_1 可修個體_i+經原PR_i+\epsilon_i.$$
 （注意估計式標準誤必需使用穩健標準誤robust standard error，即使用三明治及HC調整後的標準誤。）
 
 ```{r ans16}
-hw1Data_revised %>%
-  lm(個經PR~可修個體+經原PR, data=.) -> model2
-
-coeftest(model1, vcov. = vcovHC, type="HC1") -> model1_coeftest
-coeftest(model2, vcov. = vcovHC, type="HC1") -> model2_coeftest 
-
-stargazer(model1, model2,
-          se=list(
-            model1_coeftest[, "Std. Error"], 
-            model2_coeftest[,2]
-            ),
-          type = "html",
-          align = TRUE)
-```
-
-```{r, results='asis'}  
-# 沒什麼，只是把ans16用網頁看看而已
-# 有時候，真的很佩服自己
-
 hw1Data_revised %>%
   lm(個經PR~可修個體+經原PR, data=.) -> model2
 
