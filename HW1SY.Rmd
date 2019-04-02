@@ -99,15 +99,6 @@ hw1Data <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/mas
 請進行OLS估計前述的簡單迴歸模型。（注意估計式標準誤必需使用穩健標準誤robust standard error，即使用三明治及HC調整後的標準誤。）
 
 ```{r}
-summary(hw1Data)
-```
-
-```{r}
-na.omit(hw1Data)->
-  hw1NewData
-```
-
-```{r}
 #雖然老師上課有說要看變數與變數之間的關係，但我覺得此處應該不用看，因為是dummy一定1不然就是0，所以圖才會長這樣
 
 Y="個經PR"
@@ -118,6 +109,22 @@ hw1Data %>%
   select(X,Y) %>%
   pairs.panels()
 
+```
+
+```{r na}
+hw1Data %>%
+  lm(個經PR~可修個體,data=.)->  model1
+
+library(sandwich)
+library(lmtest)
+library(stargazer)
+
+coeftest(model1, vcov.= vcovHC, type="HC1")
+```
+
+```{r}
+na.omit(hw1Data)->
+  hw1NewData
 ```
 
 ```{r ans13}
@@ -131,6 +138,7 @@ library(stargazer)
 
 coeftest(model1, vcov.= vcovHC, type="HC1")
 ```
+
 ```{r}
 coeftest(model1, vcov.= vcovHC, type="HC1")->model1_coeftest
 ```
@@ -258,14 +266,14 @@ $Y=X\beta+\epsilon$
 
 ```{r}
 library(sandwich)
-#有無直接用工具解的方式??我覺得有
+#有無直接用工具解的方式??
 
 ```
 
 ans:
 
-$$\hat{\beta}=(X'X)^{-1}(X'Y)=(X'X)^{-1}X'(X\beta+\epsilon)=\beta+(X'X)^{-1}X'\epsilon$$
+$\hat{\beta}=(X'X)^{-1}(X'Y)=(X'X)^{-1}X'(X\beta+\epsilon)=\beta+(X'X)^{-1}X'\epsilon$
 
-$$V(\hat{\beta}|X)=E{[(\hat{\beta})-E(\hat{\beta})|X][(\hat{\beta})-E(\hat{\beta})|X]'}=E[(\hat{\beta}-\beta)(\hat{\beta}-\beta)']=()=(X'X)^{-1}X'\Sigma X(X'X)$$
+$V(\hat{\beta}|X)=E{[(\hat{\beta})-E(\hat{\beta})|X][(\hat{\beta})-E(\hat{\beta})|X]'}=E[(\hat{\beta}-\beta)(\hat{\beta}-\beta)']=(X'X^{-1}X'\epsilon)(X'X^{-1}X'\epsilon)'=(X'X)^{-1}X'E(\epsilon\epsilon') X(X'X)=(X'X)^{-1}X'\Sigma X(X'X)$
 
 
