@@ -9,8 +9,8 @@ output:
       collapsed: true
       smooth_scroll: false
 params:
-  name: ["欣怡","郁馨","",""]
-  id: [710761131,710761107,,]
+  name: [123]
+  id: [123]
   group: "team K"
   url: ""
 ---
@@ -56,7 +56,8 @@ library(dplyr)
 **個經PR**，請對應課堂的$Y_{1i}-Y_{0i}$寫法，寫出這題的表示句子。)
 
 
-ans:$個經PR_i=成績_i+(經原成績_i-成績_i)T_i$
+ans:
+     $個經PR_i=成績_i+(經原成績_i-成績_i)T_i$
 ??我要再想想
 
 △思考：
@@ -70,7 +71,8 @@ PR值受到第一次第一學期修完"個經"在同班排名的影響,而排名
 ## 1.2 效應結構
 接續上題，課堂上的treatment dummy即為這裡的**可修個體**dummy，請寫下對應課堂效應結構$Y_i=Y_{0i}+(Y_{1i}-Y_{0i})T_i$之對應寫法（以這裡的文字符號表示）。
 
-ans:$個經PR_i=經原不及格成績_i+(經原及格成績_i-經原不及格成績_i)T_i$
+ans:
+     $個經PR_i=經原不及格成績_i+(經原及格成績_i-經原不及格成績_i)T_i$
 
   $個經PR_i=不可修個經_i+(可修個經_i-不可修個經_i)T_i$
 
@@ -125,13 +127,31 @@ hw1NewData %>%
 
 library(sandwich)
 library(lmtest)
+library(stargazer)
 
-coeftest(model1, vcov.= vcovHC, type="HC1")->
-  model1_coeftest
+coeftest(model1, vcov.= vcovHC, type="HC1")
 ```
 ```{r}
-summary(model1_coeftest)
+coeftest(model1, vcov.= vcovHC, type="HC1")->model1_coeftest
 ```
+
+```{r}
+library(broom)
+
+tidy(model1_coeftest)
+
+```
+
+```{r}
+
+stargazer(model1_coeftest,
+          se=list(model1_coeftest,"std.error"),
+          type="html",
+          align=TRUE)
+
+#??我的stargazer有問題啊阿~!! 之後再動腦啊啊
+```
+
 
 ## 1.4 選擇性偏誤
 上題的估計結果很可能不正確，請說明原因故事（非數學證明）。
@@ -149,7 +169,25 @@ $$個經PR_i=\beta_0+\beta_1 可修個體_i+經原PR_i+\epsilon_i.$$
 （注意估計式標準誤必需使用穩健標準誤robust standard error，即使用三明治及HC調整後的標準誤。）
 
 ```{r ans16}
+hw1NewData %>%
+  lm(個經PR~可修個體+經原PR,data=.)->
+  model2
+
+coeftest(model2,vcov. = vcovHC, type="HC1")
 ```
+```{r}
+coeftest(model2,vcov. = vcovHC, type="HC1")->
+  model2_coeftest
+```
+
+```{r,results='asis'}
+stargazer(model1,model2,
+          se=list(model1_coeftest[,"Std. Error"]), model2_coeftest[ ,2],
+                  type="html",
+                  align=TRUE )
+```
+
+
 
 
 ## 1.7 變數關連
@@ -220,8 +258,14 @@ $Y=X\beta+\epsilon$
 
 ```{r}
 library(sandwich)
-
-  
-  
+#有無直接用工具解的方式??我覺得有
 
 ```
+
+ans:
+
+$$\hat{\beta}=(X'X)^{-1}(X'Y)=(X'X)^{-1}X'(X\beta+\epsilon)=\beta+(X'X)^{-1}X'\epsilon$$
+
+$$V(\hat{\beta}|X)=E{[(\hat{\beta})-E(\hat{\beta})|X][(\hat{\beta})-E(\hat{\beta})|X]'}=E[(\hat{\beta}-\beta)(\hat{\beta}-\beta)']=(X'X)^{-1}X'\Sigma X(X'X)$$
+
+
