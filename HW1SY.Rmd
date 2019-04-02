@@ -266,6 +266,6 @@ ans:
 
 $$\hat{\beta}=(X'X)^{-1}(X'Y)=(X'X)^{-1}X'(X\beta+\epsilon)=\beta+(X'X)^{-1}X'\epsilon$$
 
-$$V(\hat{\beta}|X)=E{[(\hat{\beta})-E(\hat{\beta})|X][(\hat{\beta})-E(\hat{\beta})|X]'}=E[(\hat{\beta}-\beta)(\hat{\beta}-\beta)']=(X'X)^{-1}X'\Sigma X(X'X)$$
+$$V(\hat{\beta}|X)=E{[(\hat{\beta})-E(\hat{\beta})|X][(\hat{\beta})-E(\hat{\beta})|X]'}=E[(\hat{\beta}-\beta)(\hat{\beta}-\beta)']=()=(X'X)^{-1}X'\Sigma X(X'X)$$
 
 
