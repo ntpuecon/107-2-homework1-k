@@ -258,10 +258,10 @@ $$=\frac{\sum_{i=1}^Nx_iy_i-n\bar{x}\bar{y}}{\sum_{i=1}^Nx_i^2-n\bar{x}^2}$$
 $$=\frac{\sum_{i,x_i=0}x_iy_i+\sum_{i,x_i=1}x_iy_i-n(n_1/n)\bar{y}}{n_1-{n_1^2/n}}$$
 $$=\frac{\sum_{i,x_i=1}y_i-n(n_1/n)\bar{y}}{n_1-n_1^2/n}$$
 $$=\frac{1/n\sum_{i,x_i=1} y_i-n_1/n\bar{y}}{n_1/n-(n_1/n)^2}$$
-$$=\frac{1/n(\sum_{i,x_i=1}/n}-\frac{n_1}{n\bar{y}})}$$
+$$=$$
 
-$$=\frac{(1-n_1/n)(\sum_{$$
-$$=\bar{y_1}-\bar{y_0}$$
+
+
 
 ## 2.2
 
