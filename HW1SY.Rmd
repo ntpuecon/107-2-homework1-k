@@ -166,6 +166,8 @@ stargazer(model1_coeftest,
 上題的估計結果很可能不正確，請說明原因故事（非數學證明）。
 
 說明：立足點：經原PR(每個人的本質不同)。
+      我們知道可否修習個體的確會影響個經PR,
+
 
 ## 1.5 選擇性偏誤
 這個資料還包含**經原PR**變數，它是學生最後修過的經原成績在該經原班的排名。說明有必要控制**經原PR**的理由（非數學證明）。
@@ -210,6 +212,8 @@ stargazer(model1,model2,
 
 ```
 !!?上面兩種做法得到的結果應相同,但是model2得到的std.error不一樣，why!?
+!!!!!!!! SHOULD WE KEEP THIS TWO?!!!!!!
+I think we could keep both of them AND THEN go ask why?????
 
 ## 1.7 變數關連
 請計算**可修個體**為1與0兩群人的**經原PR平均**及**個經PR平均**。（hint: 可利用dplyr套件下的`group_by()`,`summarise()`，及`mean( ,na.rm=T)`, na.rm=T表示計算時排除NA值） 
@@ -290,6 +294,8 @@ $$\hat{\beta}_1=\bar{y}_1-\bar{y}_0,$$
 假設$E(\epsilon_i|x_i)=0$，證明上題設定下：
 
   (a) $E(\hat{\beta}_1)=\beta_1$
+  
+  
   
   
   (b) 若條件在已知已知每個觀測值的$x_i$為1或0下$V(\epsilon_i|x_i)=\sigma^2$（即齊質變異），則條件變異數$V(\hat{\beta}_1|X)=\frac{n}{n_1 n_0}\sigma^2$。
