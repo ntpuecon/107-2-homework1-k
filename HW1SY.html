@@ -247,7 +247,6 @@ div.tocify {
 <p>我們以個體經濟學為考量之進階課程，學生學習成效以<strong>個經PR</strong>（即學生第一次第一學期修完個經在同班的排名）來衡量。令<strong>可修個體</strong>虛擬變數其值為1若該學生通過修課限制可以修個經，反之為0。請寫下正確的效應結構（ 課堂上的Y即這裡的 <strong>個經PR</strong>，請對應課堂的<span class="math inline">\(Y_{1i}-Y_{0i}\)</span>寫法，寫出這題的表示句子。)</p>
 <p>Ans: ~I PREFER MY 2.2 ANS NOW lol~ BUT STILL DIDN’T HAVE MY BEST ONE STRUGLE STRUGLE <span class="math inline">\(個經PR_i=經原不及格成績_i+(經原及格成績_i-經原不及格成績_i)可修個體\)</span> #參考資料後的想法</p>
 <p><span class="math inline">\(個經PR_i=不可修個經_i+(可修個經_i-不可修個經_i)可修個體\)</span> #直覺想法</p>
-<p>△思考： (1)T=1才會有PR值嗎? 對，因為能夠修課才會列入排名。所以當T=0(不可修課)應為NA。 <span class="math inline">\(PR\in[0.100)\)</span> PR值受到第一次第一學期修完“個經”在同班排名的影響,而排名是依照成績的高低做排序。 (2)經原成績好，個經成績就一定好嗎? 不一定吧，但若想修個經，就一定要成功修習通過經原。 因此猜測經原修得好不好，可能會影響個經修的好不好。而其餘影響各經成績的可能因素有：作業有沒有交、考試當天有沒有不小心睡過頭、上課認不認真、平時有無課後複習得習慣等等… (3)同理，微積分成績好，個經成績也不一定好，但因在修習個經的前提條件中：只要求有修微積分且微積分成績不為0，即可修個經，因此推測微積分修得好不好，雖然也有可能影響各經成績，但與經原的影響力相比應較小。</p>
 </div>
 <div class="section level2">
 <h2>1.2 效應結構</h2>
@@ -365,12 +364,16 @@ stargazer(model1_coeftest,
 <div class="section level2">
 <h2>1.4 選擇性偏誤</h2>
 <p>上題的估計結果很可能不正確，請說明原因故事（非數學證明）。</p>
-<p>說明：立足點：經原PR(每個人的本質不同)。</p>
+<p>說明：</p>
+<p>我們知道可否修習個體的確會影響個經PR，但仍須思考一些問題，如下：</p>
+<p>(1)T=1才會有PR值嗎? 對，因為能夠修課才會列入排名。所以當T=0(不可修課)應為NA。 <span class="math inline">\(PR\in[0.100)\)</span>， PR值受到第一次第一學期修完“個經”在同班排名的影響,而排名是依照成績的高低做排序。 (2)經原成績好，個經成績就一定好嗎? 不一定吧，但若想修個經，就一定要成功修習通過經原。 因此猜測經原修得好不好，可能會影響個經修的好不好。而其餘影響各經成績的可能因素有：作業有沒有交、考試當天有沒有不小心睡過頭、上課認不認真、平時有無課後複習得習慣等等… (3)同理，微積分成績好，個經成績也不一定好，但因在修習個經的前提條件中：只要求有修微積分且微積分成績不為0，即可修個經，因此推測微積分修得好不好，雖然也有可能影響各經成績，但與經原的影響力相比應較小。</p>
+<p><sub>我把我之前放在第一題的思考放下來了，你看一下，有想增加或修改的可直接改</sub></p>
 </div>
 <div id="-1" class="section level2">
 <h2>1.5 選擇性偏誤</h2>
 <p>這個資料還包含<strong>經原PR</strong>變數，它是學生最後修過的經原成績在該經原班的排名。說明有必要控制<strong>經原PR</strong>的理由（非數學證明）。</p>
-<p>說明：每人個經PR會受到經原PR影響。</p>
+<p>說明：學生的個經PR有很大的可能會受到經原PR影響,而經原PR又可能受學生的天資與後天努力所影響，因此控制經原PR為一個確保至少有相近立足點的概念。</p>
+<p>~I combine yours and mine~ btw it’s 個經PR not 個體PR lol</p>
 </div>
 <div class="section level2">
 <h2>1.6 複迴歸模型</h2>
@@ -833,7 +836,7 @@ F Statistic
 </td>
 </tr>
 </table>
-<p>!!?上面兩種做法得到的結果應相同,但是model2得到的std.error不一樣，why!?</p>
+<p>!!?上面兩種做法得到的結果應相同,但是model2得到的std.error不一樣，why!? !!!!!!!! SHOULD WE KEEP THIS TWO?!!!!!! I think we could keep both of them AND THEN go ask why?????</p>
 </div>
 <div class="section level2">
 <h2>1.7 變數關連</h2>
@@ -880,24 +883,47 @@ F Statistic
 <span class="math display">\[\begin{equation}
 \begin{split}
 
-  \hat{\beta}_1=\frac{\sum_{i=1}^N (x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^N (x_i-\bar{x})^2}
+  \hat{\beta}_1&amp;=\frac{\sum_{i=1}^N (x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^N (x_i-\bar{x})^2}
 &amp;=\frac{\sum_{i=1}^Nx_iy_i-n\bar{x}\bar{y}}{\sum_{i=1}^Nx_i^2-n\bar{x}^2}
-&amp;=\frac{\sum_{i,x_i=0}x_iy_i+\sum_{i,x_i=1}x_iy_i-n(n_1/n)\bar{y}}{n_1-{n_1^2/n}} \\
-&amp;=\frac{\sum_{i,x_i=1}y_i-n\bar{x}\bar{y}}{n_1-\bar{x}^2}
-&amp;=\frac{\sum_{i,x_i=1}y_i}{n_1n_0/n}-\frac{n\bar{x}\bar{y}}{n_1n_0/n} \\
-&amp;=\frac{n\sum_{i,x_i=1}y_i}{n_1n_0}-\frac{n}{n_0}\bar{y}
+&amp;=\frac{\sum_{i}^{n_1}1y_i+\sum_{i},^{n_0}0y_i-n(n_1/n)\bar{y}}{n_1-{n_1^2/n}} \\
+&amp;=\frac{\sum_{i}^{n_1}y_i-n\bar{x}\bar{y}}{n_1-\bar{x}^2}
+&amp;=\frac{\sum_{i}^{n_1}y_i}{n_1n_0/n}-\frac{n\bar{x}\bar{y}}{n_1n_0/n} \\
+&amp;=\frac{n\sum_{i}^{n_1}y_i}{n_1n_0}-\frac{n}{n_0}\bar{y}
 &amp;=\frac{n}{n_0}\bar{y}-\frac{n_1}{n_0}\bar{y_1}-\bar{y_0} \\
 &amp;=\bar{y_1}-\bar{y_0}
 
 \end{split}
 \end{equation}\]</span>
 <p><br />
-## 2.2</p>
+!check your <span class="math inline">\(\bar{y}\)</span>應為:<span class="math inline">\(\frac{n_1\bar{y_1}+n_0\bar{y_0}}{n}\)</span>! ~2.1 clear~</p>
+</div>
+<div id="section-1" class="section level2">
+<h2>2.2</h2>
 <p>假設<span class="math inline">\(E(\epsilon_i|x_i)=0\)</span>，證明上題設定下：</p>
 <ol style="list-style-type: lower-alpha">
-<li><p><span class="math inline">\(E(\hat{\beta}_1)=\beta_1\)</span></p></li>
-<li><p>若條件在已知已知每個觀測值的<span class="math inline">\(x_i\)</span>為1或0下<span class="math inline">\(V(\epsilon_i|x_i)=\sigma^2\)</span>（即齊質變異），則條件變異數<span class="math inline">\(V(\hat{\beta}_1|X)=\frac{n}{n_1 n_0}\sigma^2\)</span>。</p></li>
+<li><span class="math inline">\(E(\hat{\beta}_1)=\beta_1\)</span></li>
+</ol>
+<p><證明></p>
+<br />
+
+<span class="math display">\[\begin{equation}
+  \begin{split}
+  
+  \hat{\beta_1}&amp;=\frac{\sum_{i=1}^Nx_iy_i-n\bar{x}\bar{y}}{\sum_{i=1}^Nx_i^2-n\bar{x}^2}
+  &amp;=\frac{\sum_{i,x_i=0}x_iy_i+\sum_{i,x_i=1}x_iy_i-n\bar{x}\bar{y}}{n_1-n\bar{x}^2}\\
+  &amp;=\frac{\sum_{i,x_i=1}y_i-n\bar{x}\bar{y}}{n_1-n\bar{x}^2}
+  &amp;=\frac{\sum_{i,x_i=1}y_i}{n_1n_0/n}-\frac{n\bar{x}\bar{y}}{n_1n_0/n}\\
+  &amp;=\frac{n}{n_0}\bar{y_1}-(\frac{n_1}{n_0}\bar{y_1}+\bar{y_o})
+  &amp;=\bar{y_1}-\bar{y_0}
+  
+  \end{split}
+  \end{equation}\]</span>
+<p><br />
+<br />
+(b) 若條件在已知已知每個觀測值的<span class="math inline">\(x_i\)</span>為1或0下<span class="math inline">\(V(\epsilon_i|x_i)=\sigma^2\)</span>（即齊質變異），則條件變異數<span class="math inline">\(V(\hat{\beta}_1|X)=\frac{n}{n_1 n_0}\sigma^2\)</span>。</p>
+<ol start="3" style="list-style-type: lower-alpha">
 <li><p>若考慮異質變異<span class="math inline">\(V(\epsilon_i|x_i)=\sigma_i^2\)</span>，則條件變異數<span class="math inline">\(V(\hat{\beta}_1|X)=\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}\)</span>。</p></li>
+<li><p>若考慮異質變異<span class="math inline">\(V(\epsilon_i|x_i=0)=\sigma_0^2\)</span>、<span class="math inline">\(V(\epsilon_i|x_i=1)=\sigma_1^2\)</span>，則條件變異數<span class="math inline">\(V(\hat{\beta}_1|X)=\frac{\sigma_0^2}{n_0}+\frac{\sigma_1^2}{n_1}\)</span>。</p></li>
 </ol>
 </div>
 <div class="section level2">
@@ -919,7 +945,7 @@ V(\hat{\beta}|X)
 \end{split}
 \end{equation}\]</span>
 <p><br />
-</p>
+<del>老師()內只是表示三明治型式長這樣BMB’,已經QED了就不用特別在令什麼等於BM</del> ~2.3 clear~</p>
 </div>
 </div>
 
