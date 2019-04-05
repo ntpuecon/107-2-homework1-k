@@ -277,7 +277,7 @@ $$\hat{\beta}_1=\bar{y}_1-\bar{y}_0,$$
 
   \hat{\beta}_1&=\frac{\sum_{i=1}^N (x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^N (x_i-\bar{x})^2}
 &=\frac{\sum_{i=1}^Nx_iy_i-n\bar{x}\bar{y}}{\sum_{i=1}^Nx_i^2-n\bar{x}^2}
-&=\frac{\sum_{i}^{n_1}1y_i+\sum_{i},^{n_0}0y_i-n(n_1/n)\bar{y}}{n_1-{n_1^2/n}} \\
+&=\frac{\sum_{i}^{n_1}1\cdot y_i+\sum_{i}^{n_0}0\cdot y_i-n(n_1/n)\bar{y}}{n_1-{n_1^2/n}} \\
 &=\frac{\sum_{i}^{n_1}y_i-n\bar{x}\bar{y}}{n_1-\bar{x}^2}
 &=\frac{\sum_{i}^{n_1}y_i}{n_1n_0/n}-\frac{n\bar{x}\bar{y}}{n_1n_0/n} \\
 &=\frac{n\sum_{i}^{n_1}y_i}{n_1n_0}-\frac{n}{n_0}\bar{y}
@@ -318,12 +318,29 @@ $$\hat{\beta}_1=\bar{y}_1-\bar{y}_0,$$
   
   (b) 若條件在已知已知每個觀測值的$x_i$為1或0下$V(\epsilon_i|x_i)=\sigma^2$（即齊質變異），則條件變異數$V(\hat{\beta}_1|X)=\frac{n}{n_1 n_0}\sigma^2$。
   
+  <證明>
   
+  \
+  \begin{equation}
+  \begin{split}
   
+  V(\hat{\beta_1}|X)&=V(\beta_1+\frac{\sum_{i=1}^{N}(x_i-\bar{x})}{\sum_{i=1}^{N}(x_i-\bar{x})^2}\cdot\epsilon_i|X)
+  &=V(\frac{\sum_{i=1}^{N}(x_i-\bar{x})}{\sum_{i=1}^{N}(x_i-\bar{x})^2}\cdot\epsilon_i|X) \\
+  &=\frac{[\sum_{i=1}^{N}(x_i-\bar{x})]^2}{[\sum_{i=1}^{N}(x_i-\bar{x})^2]^2}V(\epsilon_i|X)
+ &=\frac{\sigma^2}{\sum_{i=1}^{N}(x_i-\bar{x})^2}\\
+ &=\frac{n}{n_1n_0}\sigma^2
+ 
+   
+ \end{split}
+ \end{equation}
+ \
+
+ 其中 $\sum_{i=1}^{N}(x_i-\bar{x})^2=\sum_{i=1}^{N}(x_i-\bar{x})x_i=\sum_{i=1}^{N}x_i^2-\bar{x}\sum_{i=1}^{N}x_i=n_1-(\frac{n_1}{n})n_1  =\frac{n_1n_0}{n}$
   
 
   (c) 若考慮異質變異$V(\epsilon_i|x_i=0)=\sigma_0^2$、$V(\epsilon_i|x_i=1)=\sigma_1^2$，則條件變異數$V(\hat{\beta}_1|X)=\frac{\sigma_0^2}{n_0}+\frac{\sigma_1^2}{n_1}$。
   
+  <證明>
   
   
 

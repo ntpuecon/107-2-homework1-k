@@ -836,7 +836,7 @@ F Statistic
 </td>
 </tr>
 </table>
-<p>!!?上面兩種做法得到的結果應相同,但是model2得到的std.error不一樣，why!? !!!!!!!! SHOULD WE KEEP THIS TWO?!!!!!! I think we could keep both of them AND THEN go ask why?????</p>
+<p>!!?上面兩種做法得到的結果應相同,但是model2得到的std.error不一樣，why!? !!!!!!!! SHOULD WE KEEP THIS TWO?!!!!!! <del>I think we could keep both of them AND THEN go ask why?????</del></p>
 </div>
 <div class="section level2">
 <h2>1.7 變數關連</h2>
@@ -885,7 +885,7 @@ F Statistic
 
   \hat{\beta}_1&amp;=\frac{\sum_{i=1}^N (x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^N (x_i-\bar{x})^2}
 &amp;=\frac{\sum_{i=1}^Nx_iy_i-n\bar{x}\bar{y}}{\sum_{i=1}^Nx_i^2-n\bar{x}^2}
-&amp;=\frac{\sum_{i}^{n_1}1y_i+\sum_{i},^{n_0}0y_i-n(n_1/n)\bar{y}}{n_1-{n_1^2/n}} \\
+&amp;=\frac{\sum_{i}^{n_1}1\cdot y_i+\sum_{i}^{n_0}0\cdot y_i-n(n_1/n)\bar{y}}{n_1-{n_1^2/n}} \\
 &amp;=\frac{\sum_{i}^{n_1}y_i-n\bar{x}\bar{y}}{n_1-\bar{x}^2}
 &amp;=\frac{\sum_{i}^{n_1}y_i}{n_1n_0/n}-\frac{n\bar{x}\bar{y}}{n_1n_0/n} \\
 &amp;=\frac{n\sum_{i}^{n_1}y_i}{n_1n_0}-\frac{n}{n_0}\bar{y}
@@ -921,9 +921,24 @@ F Statistic
 <p><br />
 <br />
 (b) 若條件在已知已知每個觀測值的<span class="math inline">\(x_i\)</span>為1或0下<span class="math inline">\(V(\epsilon_i|x_i)=\sigma^2\)</span>（即齊質變異），則條件變異數<span class="math inline">\(V(\hat{\beta}_1|X)=\frac{n}{n_1 n_0}\sigma^2\)</span>。</p>
+<br />
+
+<span class="math display">\[\begin{equation}
+  \begin{split}
+  
+  V(\hat{\beta_1}|X)&amp;=V(\beta_1+\frac{\sum_{i=1}^{N}(x_i-\bar{x})}{\sum_{i=1}^{N}(x_i-\bar{x})^2}\cdot\epsilon_i|X)
+  &amp;=V(\frac{\sum_{i=1}^{N}(x_i-\bar{x})}{\sum_{i=1}^{N}(x_i-\bar{x})^2}\cdot\epsilon_i|X) \\
+  &amp;=\frac{[\sum_{i=1}^{N}(x_i-\bar{x})]^2}{[\sum_{i=1}^{N}(x_i-\bar{x})^2]^2}V(\epsilon_i|X)
+ &amp;=\frac{\sigma^2}{\sum_{i=1}^{N}(x_i-\bar{x})^2}\\
+ &amp;=\frac{n}{n_1n_0}\sigma^2
+ 
+   
+ \end{split}
+ \end{equation}\]</span>
+<p><br />
+其中 <span class="math inline">\(\sum_{i=1}^{N}(x_i-\bar{x})^2=\sum_{i=1}^{N}(x_i-\bar{x})x_i=\sum_{i=1}^{N}x_i^2-\bar{x}\sum_{i=1}^{N}x_i=n_1-(\frac{n_1}{n})n_1 =\frac{n_1n_0}{n}\)</span></p>
 <ol start="3" style="list-style-type: lower-alpha">
-<li><p>若考慮異質變異<span class="math inline">\(V(\epsilon_i|x_i)=\sigma_i^2\)</span>，則條件變異數<span class="math inline">\(V(\hat{\beta}_1|X)=\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}\)</span>。</p></li>
-<li><p>若考慮異質變異<span class="math inline">\(V(\epsilon_i|x_i=0)=\sigma_0^2\)</span>、<span class="math inline">\(V(\epsilon_i|x_i=1)=\sigma_1^2\)</span>，則條件變異數<span class="math inline">\(V(\hat{\beta}_1|X)=\frac{\sigma_0^2}{n_0}+\frac{\sigma_1^2}{n_1}\)</span>。</p></li>
+<li>若考慮異質變異<span class="math inline">\(V(\epsilon_i|x_i=0)=\sigma_0^2\)</span>、<span class="math inline">\(V(\epsilon_i|x_i=1)=\sigma_1^2\)</span>，則條件變異數<span class="math inline">\(V(\hat{\beta}_1|X)=\frac{\sigma_0^2}{n_0}+\frac{\sigma_1^2}{n_1}\)</span>。</li>
 </ol>
 </div>
 <div class="section level2">
