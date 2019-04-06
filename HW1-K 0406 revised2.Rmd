@@ -325,24 +325,25 @@ $$\hat{\beta}_1=\bar{y}_1-\bar{y}_0,$$
   & =\beta_0\frac{\sum_{i=1}^N (x_i-\bar{x})}{\sum_{i=1}^N (x_i-\bar{x})^2}+\beta_1\frac{\sum_{i=1}^N (x_i-\bar{x})x_i}{\sum_{i=1}^N   (x_i-\bar{x})^2}+\epsilon_i\frac{\sum_{i=1}^N (x_i-\bar{x})}{\sum_{i=1}^N (x_i-\bar{x})^2} \\
   & =\beta_1+\epsilon_i\frac{\sum_{i=1}^N (x_i-\bar{x})}{\sum_{i=1}^N (x_i-\bar{x})^2} \\
 
-  \end{split}
-  \end{equation}
+ \end{split}
+ \end{equation}
 
-\
+ \
 
-  \begin{equation}
-  \begin{split}
+ \begin{equation}
+ \begin{split}
 
-  E(\hat{\beta}_1|x_i) 
-  & = E(\beta_1+\epsilon_i\frac{\sum_{i=1}^N (x_i-\bar{x})}{\sum_{i=1}^N (x_i-\bar{x})^2}|x_i) \\
-  & = \beta_1+\frac{\sum_{i=1}^N (x_i-\bar{x})}{\sum_{i=1}^N (x_i-\bar{x})^2}E(\epsilon_i|x_i) \\
-  & = \beta_1
 
-  \end{split}
-  \end{equation}
+ E(\hat{\beta}_1|x_i) 
+ & = E(\beta_1+\epsilon_i\frac{\sum_{i=1}^N (x_i-\bar{x})}{\sum_{i=1}^N (x_i-\bar{x})^2}|x_i) \\
+ & = \beta_1+\frac{\sum_{i=1}^N (x_i-\bar{x})}{\sum_{i=1}^N (x_i-\bar{x})^2}E(\epsilon_i|x_i) \\
+ & = \beta_1
 
-\
- $$E[E(\hat{\beta}_1|x_i)]=E({\beta}_1)=\beta_1$$
+ \end{split}
+ \end{equation}
+
+ \
+ $$E[E(\hat{\beta}_1|x_i)]=E({\hat{\beta}}_1)=\beta_1$$
  
   \
   

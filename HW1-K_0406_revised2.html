@@ -865,9 +865,8 @@ F Statistic
 </td>
 </tr>
 </table>
-<pre class="r"><code># !!?上面兩種做法得到的結果應相同,但是model2得到的std.error卻不一樣，why!?
-# ~SHOULD WE KEEP THIS TWO?~
-# ~~I think we could keep both of them AND THEN go ask why?????~~
+<pre class="r"><code># 以上兩種做法得到的結果應相同,但是model2得到的std.error卻不一樣，覺得疑惑。
+
 # 再討論一下</code></pre>
 </div>
 <div class="section level2">
@@ -953,22 +952,23 @@ F Statistic
   &amp; =\beta_0\frac{\sum_{i=1}^N (x_i-\bar{x})}{\sum_{i=1}^N (x_i-\bar{x})^2}+\beta_1\frac{\sum_{i=1}^N (x_i-\bar{x})x_i}{\sum_{i=1}^N   (x_i-\bar{x})^2}+\epsilon_i\frac{\sum_{i=1}^N (x_i-\bar{x})}{\sum_{i=1}^N (x_i-\bar{x})^2} \\
   &amp; =\beta_1+\epsilon_i\frac{\sum_{i=1}^N (x_i-\bar{x})}{\sum_{i=1}^N (x_i-\bar{x})^2} \\
 
-  \end{split}
-  \end{equation}\]</span>
+ \end{split}
+ \end{equation}\]</span>
 <br />
 
 <span class="math display">\[\begin{equation}
-  \begin{split}
+ \begin{split}
 
-  E(\hat{\beta}_1|x_i) 
-  &amp; = E(\beta_1+\epsilon_i\frac{\sum_{i=1}^N (x_i-\bar{x})}{\sum_{i=1}^N (x_i-\bar{x})^2}|x_i) \\
-  &amp; = \beta_1+\frac{\sum_{i=1}^N (x_i-\bar{x})}{\sum_{i=1}^N (x_i-\bar{x})^2}E(\epsilon_i|x_i) \\
-  &amp; = \beta_1
 
-  \end{split}
-  \end{equation}\]</span>
+ E(\hat{\beta}_1|x_i) 
+ &amp; = E(\beta_1+\epsilon_i\frac{\sum_{i=1}^N (x_i-\bar{x})}{\sum_{i=1}^N (x_i-\bar{x})^2}|x_i) \\
+ &amp; = \beta_1+\frac{\sum_{i=1}^N (x_i-\bar{x})}{\sum_{i=1}^N (x_i-\bar{x})^2}E(\epsilon_i|x_i) \\
+ &amp; = \beta_1
+
+ \end{split}
+ \end{equation}\]</span>
 <p><br />
-<span class="math display">\[E[E(\hat{\beta}_1|x_i)]=E({\beta}_1)=\beta_1\]</span></p>
+<span class="math display">\[E[E(\hat{\beta}_1|x_i)]=E({\hat{\beta}}_1)=\beta_1\]</span></p>
 <p><br />
 <br />
 (b) 若條件在已知已知每個觀測值的<span class="math inline">\(x_i\)</span>為1或0下<span class="math inline">\(V(\epsilon_i|x_i)=\sigma^2\)</span>（即齊質變異），則條件變異數<span class="math inline">\(V(\hat{\beta}_1|X)=\frac{n}{n_1 n_0}\sigma^2\)</span>。</p>
