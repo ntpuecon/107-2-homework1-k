@@ -320,23 +320,21 @@ summary(model_na)</code></pre>
 <pre><code>## Warning: package 'zoo' was built under R version 3.5.2</code></pre>
 <pre class="r"><code>library(stargazer)</code></pre>
 <pre><code>## Warning: package 'stargazer' was built under R version 3.5.2</code></pre>
-<pre class="r"><code>coeftest(model_na, vcov.= vcovHC, type=&quot;HC1&quot;)</code></pre>
-<pre><code>## 
-## t test of coefficients:
-## 
-##             Estimate Std. Error t value  Pr(&gt;|t|)    
-## (Intercept) 0.285110   0.025739 11.0768 &lt; 2.2e-16 ***
-## 可修個體    0.078732   0.028788  2.7349  0.006407 ** 
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <pre class="r"><code>coeftest(model_na, vcov. = vcovHC, type=&quot;HC1&quot;)-&gt; model_na_coeftest
 
-stargazer(model_na_coeftest,
-          se=list(model_na_coeftest,&quot;Std. Error&quot;),
-          type = &quot;html&quot;,
-          align = TRUE)</code></pre>
-<pre><code>## 
-## % Error: Argument 'se' must be NULL (default), or a list of numeric vectors.</code></pre>
+summary(model_na_coeftest)</code></pre>
+<pre><code>##     Estimate         Std. Error         t value          Pr(&gt;|t|)       
+##  Min.   :0.07873   Min.   :0.02574   Min.   : 2.735   Min.   :0.000000  
+##  1st Qu.:0.13033   1st Qu.:0.02650   1st Qu.: 4.820   1st Qu.:0.001602  
+##  Median :0.18192   Median :0.02726   Median : 6.906   Median :0.003204  
+##  Mean   :0.18192   Mean   :0.02726   Mean   : 6.906   Mean   :0.003204  
+##  3rd Qu.:0.23352   3rd Qu.:0.02803   3rd Qu.: 8.991   3rd Qu.:0.004806  
+##  Max.   :0.28511   Max.   :0.02879   Max.   :11.077   Max.   :0.006407</code></pre>
+<pre class="r"><code>#stargazer(model_na_coeftest,
+#          se=list(model_na_coeftest,&quot;Std. Error&quot;),
+#          type = &quot;html&quot;,
+#          align = TRUE)
+#↑↑我這串stargazer好像跑不出來，你能幫我確認下嗎？如果你也knit1不出來就直接刪掉，感恩!!!</code></pre>
 <pre class="r"><code>na.omit(hw1Data)-&gt;
   hw1NewData
 # 除NA</code></pre>
@@ -356,39 +354,37 @@ library(sandwich)
 library(lmtest)
 library(stargazer)
 
-coeftest(model1, vcov.= vcovHC, type=&quot;HC1&quot;)</code></pre>
-<p>t test of coefficients:</p>
-<pre><code>        Estimate Std. Error t value  Pr(&gt;|t|)    </code></pre>
-<p>(Intercept) 0.285110 0.025740 11.0766 &lt; 2.2e-16 *<strong> 可修個體 0.077435 0.028847 2.6843 0.007452 </strong> — Signif. codes: 0 ‘<em><strong>’ 0.001 ’</strong>’ 0.01 ’</em>’ 0.05 ‘.’ 0.1 ‘’ 1</p>
-<pre class="r"><code>coeftest(model1, vcov.= vcovHC, type=&quot;HC1&quot;)-&gt; model1_coeftest
+coeftest(model1, vcov.= vcovHC, type=&quot;HC1&quot;)-&gt; model1_coeftest
 
-stargazer(model1_coeftest,
-          se=list(model1_coeftest,&quot;Std.Error&quot;),
-          type=&quot;html&quot;,
-          align=TRUE)</code></pre>
-<p>% Error: Argument ‘se’ must be NULL (default), or a list of numeric vectors.</p>
+summary(model1_coeftest)</code></pre>
+<pre><code>Estimate         Std. Error         t value          Pr(&gt;|t|)       </code></pre>
+<p>Min. :0.07743 Min. :0.02574 Min. : 2.684 Min. :0.000000<br />
+1st Qu.:0.12935 1st Qu.:0.02652 1st Qu.: 4.782 1st Qu.:0.001863<br />
+Median :0.18127 Median :0.02729 Median : 6.880 Median :0.003726<br />
+Mean :0.18127 Mean :0.02729 Mean : 6.880 Mean :0.003726<br />
+3rd Qu.:0.23319 3rd Qu.:0.02807 3rd Qu.: 8.979 3rd Qu.:0.005589<br />
+Max. :0.28511 Max. :0.02885 Max. :11.077 Max. :0.007452</p>
+<pre class="r"><code>#此處summary(model1, model1_coeftest)knit後的產物 並沒有像上面summary(model_na_coeftest)的產出一樣漂亮(有estimate std 等等四個title，但下面的資料沒有與titles一同在白色框框內)
+#↑↑麻煩你knit時確認下這部分，感恩。</code></pre>
 </div>
 <div class="section level2">
 <h2>1.4 選擇性偏誤</h2>
 <p>上題的估計結果很可能不正確，請說明原因故事（非數學證明）。</p>
-<p>說明：</p>
-<p>我們知道可否修習個體的確會影響個經PR，但仍須思考一些問題，如下：</p>
-<p>(1)T=1才會有PR值嗎? 對，因為能夠修課才會列入排名。所以當T=0(不可修課)應為NA。 <span class="math inline">\(PR\in[0.100)\)</span>， PR值受到第一次第一學期修完“個經”在同班排名的影響,而排名是依照成績的高低做排序。</p>
-<p>NOTE:你去看hw1Data裡面有可修個經=0的人，卻有個經PR（不是NA）。有問題的話我們可以再討論</p>
-<p>(2)經原成績好，個經成績就一定好嗎? 不一定吧，但若想修個經，就一定要成功修習通過經原。 因此猜測經原修得好不好，可能會影響個經修的好不好。而其餘影響個經成績的可能因素有：作業有沒有交、考試當天有沒有不小心睡過頭、上課認不認真、平時有無課後複習得習慣等等… (3)同理，微積分成績好，個經成績也不一定好，但因在修習個經的前提條件中：只要求有修微積分且微積分成績不為0，即可修個經，因此推測微積分修得好不好，雖然也有可能影響個經成績，但與經原的影響力相比應較小。</p>
-<hr />
-<ul>
-<li>可修個經的學生若不可修個經，其個經PR應與原本就不可修個經的學生相同（需在同一個立足點才能做比較，即假設兩種人的“學習能力相同”）。 然而1.3之估計結果很可能不正確的原因即是立足點的不同所造成。我們想要探討擋修制度是否會讓學生在達到一定基礎後，對後續的學習有較佳的效果。但是這裡卻是以可不可修個體去對個經PR跑迴歸來驗證，這可能會造成偏誤。首先，可修個體者（通過經原，微積分不為0分）我們可能會認為其學習能力較強，理應會有較高的個經PR。但若一名學習能力較弱的學生經原修了三次才通過，但是以經原PR99通過這門課，我們會有很高的機率相信他的個經PR表現也會很好（基礎雖然不好，但若修了三次、長期都埋首在經濟學中，經濟實力應該可以顯著提升）。所以我們若只考慮了門檻（可不可修個經），可能會造成偏誤；換一個角度想，若一名學習能力很好的學生，且其可修個經，但若他當時是以經原60分通過這門課（從小學習能力好，再打基礎的時候可能稍微打混摸魚，但還是修過經原），我們也會有很高的機率相信他的個經PR表現會不好。 因此我們應該將經原PR納入模型中，再去探討擋修制度是否會對學生的學習成效造成正面影響。</li>
-</ul>
-<hr />
+<p><說明></p>
+<p>可修個經的學生若不可修個經，其個經PR應與原本就不可修個經的學生相同（需在同一個立足點才能做比較，即假設兩種人的“學習能力相同”）。然而1.3之估計結果很可能不正確的原因即是立足點的不同所造成。<br />
+若欲探討擋修制度對學生後續學習效果是否帶來正面的影響，單憑可修個體對個經PR跑回歸，可能會有偏誤。<br />
+<br />
+首先，可修個體者（通過經原，微積分不為0分），我們可能會認為其學習能力較強，理應會有較高的個經PR。 但若一名學習能力較弱的學生，經原修了三次才通過，最終以經原PR99通過該課程，我們有很高的機率相信：該學生的個經PR表現也不會太差。因其修了三次經原，經濟實力應可顯著提升。 所以，若只考慮門檻（可不可修個經），可能會造成偏誤。<br />
+換一個角度想，若有一名天資聰穎、學習能力佳的學生，於經原課程混水摸魚或較不上心，但仍以經原60分通過該課程，我們也會有很高的機率相信：該學生的個經PR表現也不會太好。<br />
+因此，應將經原PR納入模型中，進而探討擋修制度是否會對學生的學習成效帶來正面影響。</p>
 </div>
 <div id="-1" class="section level2">
 <h2>1.5 選擇性偏誤</h2>
 <p>這個資料還包含<strong>經原PR</strong>變數，它是學生最後修過的經原成績在該經原班的排名。說明有必要控制<strong>經原PR</strong>的理由（非數學證明）。</p>
-<p>說明：學生的個經PR有很大的可能會受到經原PR影響,而經原PR又可能受學生的天資與後天努力(修習經原一次以上)所影響，因此控制經原PR為一個確保至少有相近立足點的概念。</p>
-<ul>
-<li>同上題，在進行迴歸估計時，除了變數的選擇，我們亦需要將立足點考慮進去。我們認為可修個體是否會影響到個經PR，但必須控制在立足點相同的前提之下。若我們在進行估計時，將有相同背景（經原PR相同，我們會認為學習能力可能差不多）的人控制住，即可用“可修個體”與否來探討擋修制度對個經PR的影響，專心探討我們真正在意的變數（“可修個體”對“個經PR”的解釋力）。</li>
-</ul>
+<p><說明></p>
+<p>學生的個經PR有很大的可能會受到經原PR影響,而經原PR又可能受學生的天資與後天努力(修習經原一次以上)所影響，因此控制經原PR為一個確保至少有相近立足點的概念。<br />
+進行估計時，將有相同背景（例如：經原PR相同，可視為學習能力差不多）的人控制住，即可專心探討真正在意的變數：“可修個體”對“個經PR”的解釋力。<br />
+</p>
 <pre class="r"><code>hw1NewData %&gt;%
   lm(個經PR~經原PR,data=.)-&gt;  model_test
 summary(model_test)</code></pre>
